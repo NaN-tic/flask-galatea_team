@@ -13,8 +13,6 @@ Team = tryton.pool.get('galatea.team')
 GALATEA_WEBSITE = current_app.config.get('TRYTON_GALATEA_SITE')
 LIMIT = current_app.config.get('TRYTON_PAGINATION_TEAM_LIMIT', 20)
 
-TEAM_FIELD_NAMES = ['name', 'slug', 'avatar_path', 'description']
-
 @team.route("/<slug>", endpoint="team")
 @tryton.transaction()
 def team_detail(lang, slug):
@@ -59,7 +57,7 @@ def teams(lang):
     offset = (page-1)*LIMIT
 
     order = [('name', 'ASC')]
-    teams = Team.search_read(domain, offset, LIMIT, order, TEAM_FIELD_NAMES)
+    teams = Team.search(domain, offset, LIMIT, order)
 
     pagination = Pagination(page=page, total=total, per_page=LIMIT, display_msg=DISPLAY_MSG, bs_version='3')
 
